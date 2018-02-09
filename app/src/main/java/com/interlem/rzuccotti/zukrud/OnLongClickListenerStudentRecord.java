@@ -22,9 +22,11 @@ public class OnLongClickListenerStudentRecord implements View.OnLongClickListene
         context = view.getContext();
         id = view.getTag().toString();
 
+        ObjectStudent student = getStudentById(Integer.parseInt(id));
+
         final CharSequence[] items = { "Edit", "Delete" };
 
-        new AlertDialog.Builder(context).setTitle("Student Record")
+        new AlertDialog.Builder(context).setTitle(student.firstname)
                 .setItems(items, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int item) {
 
@@ -92,4 +94,10 @@ public class OnLongClickListenerStudentRecord implements View.OnLongClickListene
                         }).show();
     }
 
+    public ObjectStudent getStudentById(final int studentId)
+    {
+        final TableControllerStudent tableControllerStudent = new TableControllerStudent(context);
+        ObjectStudent objectStudent = tableControllerStudent.readSingleRecord(studentId);
+        return objectStudent;
+    }
 }

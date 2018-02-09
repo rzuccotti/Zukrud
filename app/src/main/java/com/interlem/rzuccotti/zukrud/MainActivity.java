@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 String textViewContents = studentFirstname + " - " + studentEmail;
 
                 TextView textViewStudentItem= new TextView(this);
-                textViewStudentItem.setPadding(0, 10, 0, 10);
+                textViewStudentItem.setPadding(0, 20, 0, 20);
                 textViewStudentItem.setText(textViewContents);
                 textViewStudentItem.setTag(Integer.toString(id));
 
