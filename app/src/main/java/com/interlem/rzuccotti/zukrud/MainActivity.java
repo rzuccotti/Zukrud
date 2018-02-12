@@ -1,11 +1,11 @@
 package com.interlem.rzuccotti.zukrud;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,55 +15,52 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button buttonCreateStudent = findViewById(R.id.buttonCreateStudent);
+        Button buttonCreateStudent = findViewById(R.id.createStudent);
         buttonCreateStudent.setOnClickListener(new OnClickListenerCreateStudent());
+
+        Button buttonTestServer = findViewById(R.id.callServer);
+        buttonTestServer.setOnClickListener(new OnClickListenerTestServer());
 
         countRecords();
         readRecords();
+
+        //new Thread(new ClientThread()).start();
+
     }
 
     public void countRecords() {
         int recordCount = new TableControllerStudent(this).count();
-        TextView textViewRecordCount = findViewById(R.id.textViewRecordCount);
-        textViewRecordCount.setText(recordCount + " records found.");
+        //TextView textViewRecordCount = findViewById(R.id.textViewRecordCount);
+        //textViewRecordCount.setText(recordCount + " records found.");
     }
 
     public void readRecords() {
 
-        LinearLayout linearLayoutRecords = findViewById(R.id.linearLayoutRecords);
-        linearLayoutRecords.removeAllViews();
+        final ListView listview = findViewById(R.id.listview);
+        final List<ObjectStudent> students = new TableControllerStudent(this).read();
+        final List<String> list = new ArrayList<>();
+        for (ObjectStudent student: students)
+        {
+            list.add(student.firstname);
+        }
 
-        List<ObjectStudent> students = new TableControllerStudent(this).read();
+        final StableArrayAdapter adapter = new StableArrayAdapter(this,
+                android.R.layout.simple_list_item_1, list);
+        listview.setAdapter(adapter);
 
-        if (students.size() > 0) {
+        listview.setOnItemLongClickListener(new OnItemLongClickListenerStudentRecord());
+        /*listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                           int pos, long id) {
+                // TODO Auto-generated method stub
 
-            for (ObjectStudent obj : students) {
+                Log.v("long clicked","pos: " + pos);
 
-                int id = obj.id;
-                String studentFirstname = obj.firstname;
-                String studentEmail = obj.email;
-
-                String textViewContents = studentFirstname + " - " + studentEmail;
-
-                TextView textViewStudentItem= new TextView(this);
-                textViewStudentItem.setPadding(0, 20, 0, 20);
-                textViewStudentItem.setText(textViewContents);
-                textViewStudentItem.setTag(Integer.toString(id));
-
-                linearLayoutRecords.addView(textViewStudentItem);
-                textViewStudentItem.setOnLongClickListener(new OnLongClickListenerStudentRecord());
+                return true;
             }
-
-        }
-
-        else {
-
-            TextView locationItem = new TextView(this);
-            locationItem.setPadding(8, 8, 8, 8);
-            locationItem.setText("No records yet.");
-
-            linearLayoutRecords.addView(locationItem);
-        }
+        });*/
 
     }
+
 }
