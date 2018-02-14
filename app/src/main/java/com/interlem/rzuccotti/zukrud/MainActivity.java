@@ -3,6 +3,7 @@ package com.interlem.rzuccotti.zukrud;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button buttonCreateStudent = findViewById(R.id.createStudent);
+        ImageButton buttonCreateStudent = findViewById(R.id.createStudent);
         buttonCreateStudent.setOnClickListener(new OnClickListenerCreateStudent());
 
         Button buttonTestServer = findViewById(R.id.callServer);
