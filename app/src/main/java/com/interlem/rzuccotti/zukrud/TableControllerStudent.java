@@ -49,7 +49,7 @@ public class TableControllerStudent extends DatabaseHandler {
 
         List<ObjectStudent> recordsList = new ArrayList<ObjectStudent>();
 
-        String sql = "SELECT * FROM students ORDER BY id DESC";
+        String sql = "SELECT * FROM students ORDER BY firstname ASC";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(sql, null);
