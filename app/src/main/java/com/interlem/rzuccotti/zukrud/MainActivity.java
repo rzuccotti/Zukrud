@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         countRecords();
         readRecords();
 
-        //new Thread(new ClientThread()).start();
+//        new Thread(new ClientThread("Avvio l'app")).start();
 
     }
 

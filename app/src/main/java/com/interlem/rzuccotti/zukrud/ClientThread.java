@@ -12,25 +12,27 @@ import java.net.UnknownHostException;
 class ClientThread implements Runnable {
 
     public static Socket socket;
+    private String message;
 
     private static final int SERVERPORT = 5002;
-    private static final String SERVER_IP = "172.18.50.162";
+    private static final String SERVER_IP = "172.18.50.107";
+
+    ClientThread (String message_)
+    {
+        message = message_;
+    }
 
     @Override
     public void run() {
-
         try {
-            InetAddress serverAddr = InetAddress.getByName(SERVER_IP);
-
-            socket = new Socket(serverAddr, SERVERPORT);
-            socket.getOutputStream().write("papacella".getBytes());
-
-        } catch (UnknownHostException e1) {
-            e1.printStackTrace();
-        } catch (IOException e1) {
-            e1.printStackTrace();
+            InetAddress serverAddress = InetAddress.getByName(SERVER_IP);
+            socket = new Socket(serverAddress, SERVERPORT);
+            socket.getOutputStream().write(message.getBytes());
+            socket.close();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
     }
-
 }
