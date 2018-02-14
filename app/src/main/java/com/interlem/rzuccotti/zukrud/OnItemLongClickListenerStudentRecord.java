@@ -9,6 +9,8 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.List;
+
 /**
  * Created by rzuccotti on 09/02/2018.
  */
@@ -67,10 +69,11 @@ public class OnItemLongClickListenerStudentRecord implements AdapterView.OnItemL
     }
 
     @Override
-    public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int id, long l) {
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int index_i, long index_l) {
         context = view.getContext();
 
-        ObjectStudent student = getStudentById(id);
+        final List<ObjectStudent> students = new TableControllerStudent(context).read();
+        final ObjectStudent student = students.get(index_i);
 
         final CharSequence[] items = { "Edit", "Delete" };
 
@@ -79,11 +82,11 @@ public class OnItemLongClickListenerStudentRecord implements AdapterView.OnItemL
                     public void onClick(DialogInterface dialog, int item) {
 
                         if (item == 0) {
-                            editRecord(id);
+                            editRecord(student.id);
                         }
                         else if (item == 1) {
 
-                            boolean deleteSuccessful = new TableControllerStudent(context).delete(id);
+                            boolean deleteSuccessful = new TableControllerStudent(context).delete(student.id);
 
                             if (deleteSuccessful){
                                 Toast.makeText(context, "Student record was deleted.", Toast.LENGTH_SHORT).show();

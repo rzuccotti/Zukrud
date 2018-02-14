@@ -47,19 +47,8 @@ public class MainActivity extends AppCompatActivity {
         final StableArrayAdapter adapter = new StableArrayAdapter(this,
                 android.R.layout.simple_list_item_1, list);
         listview.setAdapter(adapter);
-
         listview.setOnItemLongClickListener(new OnItemLongClickListenerStudentRecord());
-        /*listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-                                           int pos, long id) {
-                // TODO Auto-generated method stub
 
-                Log.v("long clicked","pos: " + pos);
-
-                return true;
-            }
-        });*/
 
     }
 
