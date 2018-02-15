@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 android.R.layout.simple_list_item_1, list);
         listview.setAdapter(adapter);
         listview.setOnItemLongClickListener(new OnItemLongClickListenerStudentRecord());
-
+        listview.setOnItemClickListener(new OnItemClickListenerStudentRecord());
 
     }
 
