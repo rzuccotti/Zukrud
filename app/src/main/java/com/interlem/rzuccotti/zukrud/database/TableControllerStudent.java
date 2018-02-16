@@ -1,9 +1,11 @@
-package com.interlem.rzuccotti.zukrud;
+package com.interlem.rzuccotti.zukrud.database;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.interlem.rzuccotti.zukrud.database.model.ObjectStudent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +24,8 @@ public class TableControllerStudent extends DatabaseHandler {
 
         ContentValues values = new ContentValues();
 
-        values.put("firstname", objectStudent.firstname);
-        values.put("email", objectStudent.email);
+        values.put("firstname", objectStudent.getFirstName());
+        values.put("email", objectStudent.getEmail());
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -62,9 +64,9 @@ public class TableControllerStudent extends DatabaseHandler {
                 String studentEmail = cursor.getString(cursor.getColumnIndex("email"));
 
                 ObjectStudent objectStudent = new ObjectStudent();
-                objectStudent.id = id;
-                objectStudent.firstname = studentFirstname;
-                objectStudent.email = studentEmail;
+                objectStudent.setId(id);
+                objectStudent.setFirstName(studentFirstname);
+                objectStudent.setEmail(studentEmail);
 
                 recordsList.add(objectStudent);
 
@@ -94,9 +96,9 @@ public class TableControllerStudent extends DatabaseHandler {
             String email = cursor.getString(cursor.getColumnIndex("email"));
 
             objectStudent = new ObjectStudent();
-            objectStudent.id = id;
-            objectStudent.firstname = firstname;
-            objectStudent.email = email;
+            objectStudent.setId(id);
+            objectStudent.setFirstName(firstname);
+            objectStudent.setEmail(email);
 
         }
 
@@ -111,12 +113,12 @@ public class TableControllerStudent extends DatabaseHandler {
 
         ContentValues values = new ContentValues();
 
-        values.put("firstname", objectStudent.firstname);
-        values.put("email", objectStudent.email);
+        values.put("firstname", objectStudent.getFirstName());
+        values.put("email", objectStudent.getEmail());
 
         String where = "id = ?";
 
-        String[] whereArgs = { Integer.toString(objectStudent.id) };
+        String[] whereArgs = { Integer.toString(objectStudent.getId()) };
 
         SQLiteDatabase db = this.getWritableDatabase();
 

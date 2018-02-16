@@ -1,4 +1,4 @@
-package com.interlem.rzuccotti.zukrud;
+package com.interlem.rzuccotti.zukrud.listener;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -8,6 +8,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.interlem.rzuccotti.zukrud.activity.MainActivity;
+import com.interlem.rzuccotti.zukrud.R;
+import com.interlem.rzuccotti.zukrud.database.TableControllerStudent;
+import com.interlem.rzuccotti.zukrud.database.model.ObjectStudent;
 
 import java.util.List;
 
@@ -31,8 +36,8 @@ public class OnItemLongClickListenerStudentRecord implements AdapterView.OnItemL
         final EditText editTextStudentFirstname = formElementsView.findViewById(R.id.editTextStudentFirstname);
         final EditText editTextStudentEmail = formElementsView.findViewById(R.id.editTextStudentEmail);
 
-        editTextStudentFirstname.setText(objectStudent.firstname);
-        editTextStudentEmail.setText(objectStudent.email);
+        editTextStudentFirstname.setText(objectStudent.getFirstName());
+        editTextStudentEmail.setText(objectStudent.getEmail());
 
         new AlertDialog.Builder(context)
                 .setView(formElementsView)
@@ -42,9 +47,9 @@ public class OnItemLongClickListenerStudentRecord implements AdapterView.OnItemL
                             public void onClick(DialogInterface dialog, int id) {
 
                                 ObjectStudent objectStudent = new ObjectStudent();
-                                objectStudent.id = studentId;
-                                objectStudent.firstname = editTextStudentFirstname.getText().toString();
-                                objectStudent.email = editTextStudentEmail.getText().toString();
+                                objectStudent.setId(studentId);
+                                objectStudent.setFirstName(editTextStudentFirstname.getText().toString());
+                                objectStudent.setEmail(editTextStudentEmail.getText().toString());
 
                                 boolean updateSuccessful = tableControllerStudent.update(objectStudent);
 
@@ -77,16 +82,16 @@ public class OnItemLongClickListenerStudentRecord implements AdapterView.OnItemL
 
         final CharSequence[] items = { "Edit", "Delete" };
 
-        new AlertDialog.Builder(context).setTitle(student.firstname)
+        new AlertDialog.Builder(context).setTitle(student.getFirstName())
                 .setItems(items, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int item) {
 
                         if (item == 0) {
-                            editRecord(student.id);
+                            editRecord(student.getId());
                         }
                         else if (item == 1) {
 
-                            boolean deleteSuccessful = new TableControllerStudent(context).delete(student.id);
+                            boolean deleteSuccessful = new TableControllerStudent(context).delete(student.getId());
 
                             if (deleteSuccessful){
                                 Toast.makeText(context, "Student record was deleted.", Toast.LENGTH_SHORT).show();

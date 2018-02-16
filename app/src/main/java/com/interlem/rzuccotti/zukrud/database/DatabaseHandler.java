@@ -1,4 +1,4 @@
-package com.interlem.rzuccotti.zukrud;
+package com.interlem.rzuccotti.zukrud.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

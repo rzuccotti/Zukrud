@@ -1,4 +1,4 @@
-package com.interlem.rzuccotti.zukrud;
+package com.interlem.rzuccotti.zukrud.listener;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -7,6 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.interlem.rzuccotti.zukrud.activity.MainActivity;
+import com.interlem.rzuccotti.zukrud.R;
+import com.interlem.rzuccotti.zukrud.database.TableControllerStudent;
+import com.interlem.rzuccotti.zukrud.database.model.ObjectStudent;
 
 /**
  * Created by rzuccotti on 09/02/2018.
@@ -38,8 +43,8 @@ public class OnClickListenerCreateStudent implements View.OnClickListener {
                                 String studentEmail = editTextStudentEmail.getText().toString();
 
                                 ObjectStudent objectStudent = new ObjectStudent();
-                                objectStudent.firstname= studentFirstname;
-                                objectStudent.email= studentEmail;
+                                objectStudent.setFirstName(studentFirstname);
+                                objectStudent.setEmail(studentEmail);
 
                                 boolean createSuccessful = new TableControllerStudent(context).create(objectStudent);
 

@@ -1,4 +1,4 @@
-package com.interlem.rzuccotti.zukrud;
+package com.interlem.rzuccotti.zukrud.server;
 
 import java.io.IOException;
 import java.net.InetAddress;

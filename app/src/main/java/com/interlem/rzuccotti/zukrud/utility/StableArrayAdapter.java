@@ -1,4 +1,4 @@
-package com.interlem.rzuccotti.zukrud;
+package com.interlem.rzuccotti.zukrud.utility;
 
 import android.content.Context;
 import android.widget.ArrayAdapter;

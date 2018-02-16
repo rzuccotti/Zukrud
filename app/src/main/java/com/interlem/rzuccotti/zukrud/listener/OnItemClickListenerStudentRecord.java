@@ -1,10 +1,12 @@
-package com.interlem.rzuccotti.zukrud;
+package com.interlem.rzuccotti.zukrud.listener;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
+
+import com.interlem.rzuccotti.zukrud.database.TableControllerStudent;
+import com.interlem.rzuccotti.zukrud.database.model.ObjectStudent;
 
 import java.util.List;
 
@@ -24,6 +26,6 @@ public class OnItemClickListenerStudentRecord implements AdapterView.OnItemClick
         final List<ObjectStudent> students = new TableControllerStudent(context).read();
         final ObjectStudent student = students.get(index_i);
 
-        Toast.makeText(context, "In futuro verrà mostrato il dettaglio dello studente: " + student.firstname, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "In futuro verrà mostrato il dettaglio dello studente: " + student.getFirstName(), Toast.LENGTH_SHORT).show();
     }
 }

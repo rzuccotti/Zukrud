@@ -1,4 +1,6 @@
-package com.interlem.rzuccotti.zukrud;
+package com.interlem.rzuccotti.zukrud.utility;
+
+import com.interlem.rzuccotti.zukrud.database.model.ObjectStudent;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -38,15 +40,15 @@ public class BuildXMLFile {
             message.appendChild(stud);
 
             Element idElem = doc.createElement("id");
-            idElem.appendChild(doc.createTextNode(String.valueOf(student.id)));
+            idElem.appendChild(doc.createTextNode(String.valueOf(student.getId())));
             stud.appendChild(idElem);
 
             Element nomeElem = doc.createElement("nome");
-            nomeElem.appendChild(doc.createTextNode(student.firstname));
+            nomeElem.appendChild(doc.createTextNode(student.getFirstName()));
             stud.appendChild(nomeElem);
 
             Element emailElem = doc.createElement("email");
-            emailElem.appendChild(doc.createTextNode(String.valueOf(student.email)));
+            emailElem.appendChild(doc.createTextNode(String.valueOf(student.getEmail())));
             stud.appendChild(emailElem);
 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
