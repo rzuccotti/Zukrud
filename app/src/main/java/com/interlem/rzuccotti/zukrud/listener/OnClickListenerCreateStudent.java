@@ -3,6 +3,7 @@ package com.interlem.rzuccotti.zukrud.listener;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -50,8 +51,10 @@ public class OnClickListenerCreateStudent implements View.OnClickListener {
 
                                 if(createSuccessful){
                                     Toast.makeText(context, "Student information was saved.", Toast.LENGTH_SHORT).show();
+                                    Log.i("Crea studente", "Creato studente: " + objectStudent.toString());
                                 }else{
                                     Toast.makeText(context, "Unable to save student information.", Toast.LENGTH_SHORT).show();
+                                    Log.e("Crea studente", "Impossibile creare lo studente: " + objectStudent.toString());
                                 }
 
                                 ((MainActivity) context).countRecords();

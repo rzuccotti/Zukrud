@@ -14,6 +14,15 @@ public class ObjectStudent {
 
     }
 
+    @Override
+    public String toString() {
+        return "ObjectStudent{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
     public int getId() {
         return id;
     }

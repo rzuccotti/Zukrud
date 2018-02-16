@@ -2,6 +2,7 @@ package com.interlem.rzuccotti.zukrud.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;

@@ -3,10 +3,12 @@ package com.interlem.rzuccotti.zukrud.listener;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.interlem.rzuccotti.zukrud.activity.MainActivity;
@@ -55,8 +57,10 @@ public class OnItemLongClickListenerStudentRecord implements AdapterView.OnItemL
 
                                 if(updateSuccessful){
                                     Toast.makeText(context, "Student record was updated.", Toast.LENGTH_SHORT).show();
+                                    Log.i("Modifica studente", "Modificato studente: " + objectStudent.toString());
                                 }else{
                                     Toast.makeText(context, "Unable to update student record.", Toast.LENGTH_SHORT).show();
+                                    Log.e("Modifica studente", "Impossibile modificare lo studente: " + objectStudent.toString());
                                 }
 
                                 ((MainActivity) context).countRecords();
@@ -76,6 +80,9 @@ public class OnItemLongClickListenerStudentRecord implements AdapterView.OnItemL
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int index_i, long index_l) {
         context = view.getContext();
+        MainActivity ma = (MainActivity) context;
+        final ListView listview = ma.findViewById(R.id.listview);
+        listview.setOnItemClickListener(null);
 
         final List<ObjectStudent> students = new TableControllerStudent(context).read();
         final ObjectStudent student = students.get(index_i);
@@ -95,12 +102,15 @@ public class OnItemLongClickListenerStudentRecord implements AdapterView.OnItemL
 
                             if (deleteSuccessful){
                                 Toast.makeText(context, "Student record was deleted.", Toast.LENGTH_SHORT).show();
+                                Log.i("Elimina studente", "Aggiunto studente: " + student.toString());
                             }else{
                                 Toast.makeText(context, "Unable to delete student record.", Toast.LENGTH_SHORT).show();
+                                Log.e("Elimina studente", "Impossibile modificare lo studente: " + student.toString());
                             }
 
                             ((MainActivity) context).countRecords();
                             ((MainActivity) context).readRecords();
+                            listview.setOnItemLongClickListener(new OnItemLongClickListenerStudentRecord());
 
                         }
 
