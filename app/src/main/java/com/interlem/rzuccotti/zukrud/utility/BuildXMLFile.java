@@ -33,6 +33,10 @@ public class BuildXMLFile {
             Element message = doc.createElement("message");
             cereal.appendChild(message);
 
+            Element response = doc.createElement("response");
+            response.appendChild(doc.createTextNode(""));
+            message.appendChild(response);
+
             Element op = doc.createElement("op");
             op.appendChild(doc.createTextNode(operation.name()));
             message.appendChild(op);
