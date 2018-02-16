@@ -13,6 +13,9 @@ import com.interlem.rzuccotti.zukrud.activity.MainActivity;
 import com.interlem.rzuccotti.zukrud.R;
 import com.interlem.rzuccotti.zukrud.database.TableControllerStudent;
 import com.interlem.rzuccotti.zukrud.database.model.ObjectStudent;
+import com.interlem.rzuccotti.zukrud.enumeration.ServerOperation;
+import com.interlem.rzuccotti.zukrud.server.ClientThread;
+import com.interlem.rzuccotti.zukrud.utility.BuildXMLFile;
 
 /**
  * Created by rzuccotti on 09/02/2018.
@@ -21,7 +24,6 @@ import com.interlem.rzuccotti.zukrud.database.model.ObjectStudent;
 public class OnClickListenerCreateStudent implements View.OnClickListener {
 
     Context context;
-    String id;
 
     @Override
     public void onClick(View view) {
@@ -34,33 +36,34 @@ public class OnClickListenerCreateStudent implements View.OnClickListener {
         final EditText editTextStudentEmail = formElementsView.findViewById(R.id.editTextStudentEmail);
 
         new AlertDialog.Builder(context)
-                .setView(formElementsView)
-                .setTitle("Create Student")
-                .setPositiveButton("Add",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
+            .setView(formElementsView)
+            .setTitle("Create Student")
+            .setPositiveButton("Add",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                String studentFirstname = editTextStudentFirstname.getText().toString();
+                String studentEmail = editTextStudentEmail.getText().toString();
 
-                                String studentFirstname = editTextStudentFirstname.getText().toString();
-                                String studentEmail = editTextStudentEmail.getText().toString();
+                ObjectStudent objectStudent = new ObjectStudent();
+                objectStudent.setFirstName(studentFirstname);
+                objectStudent.setEmail(studentEmail);
 
-                                ObjectStudent objectStudent = new ObjectStudent();
-                                objectStudent.setFirstName(studentFirstname);
-                                objectStudent.setEmail(studentEmail);
+                boolean createSuccessful = new TableControllerStudent(context).create(objectStudent);
 
-                                boolean createSuccessful = new TableControllerStudent(context).create(objectStudent);
+                if(createSuccessful){
+                    String xml = BuildXMLFile.buildStudentXML(objectStudent, ServerOperation.CREATE);
+                    new Thread(new ClientThread(xml)).start();
 
-                                if(createSuccessful){
-                                    Toast.makeText(context, "Student information was saved.", Toast.LENGTH_SHORT).show();
-                                    Log.i("Crea studente", "Creato studente: " + objectStudent.toString());
-                                }else{
-                                    Toast.makeText(context, "Unable to save student information.", Toast.LENGTH_SHORT).show();
-                                    Log.e("Crea studente", "Impossibile creare lo studente: " + objectStudent.toString());
-                                }
+                    Toast.makeText(context, "Student information was saved.", Toast.LENGTH_SHORT).show();
+                    Log.i("Crea studente", "Creato studente: " + objectStudent.toString());
+                }else{
+                    Toast.makeText(context, "Unable to save student information.", Toast.LENGTH_SHORT).show();
+                    Log.e("Crea studente", "Impossibile creare lo studente: " + objectStudent.toString());
+                }
 
-                                ((MainActivity) context).countRecords();
-                                ((MainActivity) context).readRecords();
-                            }
+                ((MainActivity) context).readRecords();
+            }
 
-                        }).show();
+        }).show();
     }
 }

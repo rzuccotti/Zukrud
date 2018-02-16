@@ -9,7 +9,7 @@ import java.net.UnknownHostException;
  * Created by rzuccotti on 12/02/2018.
  */
 
-class ClientThread implements Runnable {
+public class ClientThread implements Runnable {
 
     public static Socket socket;
     private String message;
@@ -17,7 +17,7 @@ class ClientThread implements Runnable {
     private static final int SERVERPORT = 5002;
     private static final String SERVER_IP = "172.18.50.107";
 
-    ClientThread (String message_)
+    public ClientThread (String message_)
     {
         message = message_;
     }

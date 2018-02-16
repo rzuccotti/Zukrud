@@ -15,6 +15,9 @@ import com.interlem.rzuccotti.zukrud.activity.MainActivity;
 import com.interlem.rzuccotti.zukrud.R;
 import com.interlem.rzuccotti.zukrud.database.TableControllerStudent;
 import com.interlem.rzuccotti.zukrud.database.model.ObjectStudent;
+import com.interlem.rzuccotti.zukrud.enumeration.ServerOperation;
+import com.interlem.rzuccotti.zukrud.server.ClientThread;
+import com.interlem.rzuccotti.zukrud.utility.BuildXMLFile;
 
 import java.util.List;
 
@@ -42,32 +45,34 @@ public class OnItemLongClickListenerStudentRecord implements AdapterView.OnItemL
         editTextStudentEmail.setText(objectStudent.getEmail());
 
         new AlertDialog.Builder(context)
-                .setView(formElementsView)
-                .setTitle("Edit Record")
-                .setPositiveButton("Save Changes",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
+            .setView(formElementsView)
+            .setTitle("Edit Record")
+            .setPositiveButton("Save Changes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
 
-                                ObjectStudent objectStudent = new ObjectStudent();
-                                objectStudent.setId(studentId);
-                                objectStudent.setFirstName(editTextStudentFirstname.getText().toString());
-                                objectStudent.setEmail(editTextStudentEmail.getText().toString());
+                        ObjectStudent objectStudent = new ObjectStudent();
+                        objectStudent.setId(studentId);
+                        objectStudent.setFirstName(editTextStudentFirstname.getText().toString());
+                        objectStudent.setEmail(editTextStudentEmail.getText().toString());
 
-                                boolean updateSuccessful = tableControllerStudent.update(objectStudent);
+                        boolean updateSuccessful = tableControllerStudent.update(objectStudent);
 
-                                if(updateSuccessful){
-                                    Toast.makeText(context, "Student record was updated.", Toast.LENGTH_SHORT).show();
-                                    Log.i("Modifica studente", "Modificato studente: " + objectStudent.toString());
-                                }else{
-                                    Toast.makeText(context, "Unable to update student record.", Toast.LENGTH_SHORT).show();
-                                    Log.e("Modifica studente", "Impossibile modificare lo studente: " + objectStudent.toString());
-                                }
+                        if(updateSuccessful){
+                            String xml = BuildXMLFile.buildStudentXML(objectStudent, ServerOperation.UPDATE);
+                            new Thread(new ClientThread(xml)).start();
 
-                                ((MainActivity) context).countRecords();
-                                ((MainActivity) context).readRecords();
-                            }
+                            Toast.makeText(context, "Student record was updated.", Toast.LENGTH_SHORT).show();
+                            Log.i("Modifica studente", "Modificato studente: " + objectStudent.toString());
+                        }else{
+                            Toast.makeText(context, "Unable to update student record.", Toast.LENGTH_SHORT).show();
+                            Log.e("Modifica studente", "Impossibile modificare lo studente: " + objectStudent.toString());
+                        }
 
-                        }).show();
+                        ((MainActivity) context).readRecords();
+                    }
+
+                }).show();
     }
 
     public ObjectStudent getStudentById(final int studentId)
@@ -101,14 +106,16 @@ public class OnItemLongClickListenerStudentRecord implements AdapterView.OnItemL
                             boolean deleteSuccessful = new TableControllerStudent(context).delete(student.getId());
 
                             if (deleteSuccessful){
+                                String xml = BuildXMLFile.buildStudentXML(student, ServerOperation.DELETE);
+                                new Thread(new ClientThread(xml)).start();
+
                                 Toast.makeText(context, "Student record was deleted.", Toast.LENGTH_SHORT).show();
-                                Log.i("Elimina studente", "Aggiunto studente: " + student.toString());
+                                Log.i("Elimina studente", "Eliminato studente: " + student.toString());
                             }else{
                                 Toast.makeText(context, "Unable to delete student record.", Toast.LENGTH_SHORT).show();
-                                Log.e("Elimina studente", "Impossibile modificare lo studente: " + student.toString());
+                                Log.e("Elimina studente", "Impossibile eliminare lo studente: " + student.toString());
                             }
 
-                            ((MainActivity) context).countRecords();
                             ((MainActivity) context).readRecords();
                             listview.setOnItemLongClickListener(new OnItemLongClickListenerStudentRecord());
 

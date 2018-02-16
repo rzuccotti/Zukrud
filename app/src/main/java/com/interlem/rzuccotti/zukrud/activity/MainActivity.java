@@ -2,7 +2,6 @@ package com.interlem.rzuccotti.zukrud.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -11,7 +10,6 @@ import com.interlem.rzuccotti.zukrud.R;
 import com.interlem.rzuccotti.zukrud.utility.StableArrayAdapter;
 import com.interlem.rzuccotti.zukrud.database.TableControllerStudent;
 import com.interlem.rzuccotti.zukrud.listener.OnClickListenerCreateStudent;
-import com.interlem.rzuccotti.zukrud.listener.OnClickListenerTestServer;
 import com.interlem.rzuccotti.zukrud.listener.OnItemClickListenerStudentRecord;
 import com.interlem.rzuccotti.zukrud.listener.OnItemLongClickListenerStudentRecord;
 import com.interlem.rzuccotti.zukrud.database.model.ObjectStudent;
@@ -29,20 +27,7 @@ public class MainActivity extends AppCompatActivity {
         ImageButton buttonCreateStudent = findViewById(R.id.createStudent);
         buttonCreateStudent.setOnClickListener(new OnClickListenerCreateStudent());
 
-        Button buttonTestServer = findViewById(R.id.callServer);
-        buttonTestServer.setOnClickListener(new OnClickListenerTestServer());
-
-        countRecords();
         readRecords();
-
-//        new Thread(new ClientThread("Avvio l'app")).start();
-
-    }
-
-    public void countRecords() {
-        int recordCount = new TableControllerStudent(this).count();
-        //TextView textViewRecordCount = findViewById(R.id.textViewRecordCount);
-        //textViewRecordCount.setText(recordCount + " records found.");
     }
 
     public void readRecords() {

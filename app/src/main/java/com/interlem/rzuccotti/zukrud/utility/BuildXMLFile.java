@@ -1,6 +1,7 @@
 package com.interlem.rzuccotti.zukrud.utility;
 
 import com.interlem.rzuccotti.zukrud.database.model.ObjectStudent;
+import com.interlem.rzuccotti.zukrud.enumeration.ServerOperation;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -18,7 +19,7 @@ import javax.xml.transform.stream.StreamResult;
 
 public class BuildXMLFile {
 
-    public static String buildStudentXML(ObjectStudent student, String operation) {
+    public static String buildStudentXML(ObjectStudent student, ServerOperation operation) {
 
         String xml = null;
         try {
@@ -33,7 +34,7 @@ public class BuildXMLFile {
             cereal.appendChild(message);
 
             Element op = doc.createElement("op");
-            op.appendChild(doc.createTextNode(operation));
+            op.appendChild(doc.createTextNode(operation.name()));
             message.appendChild(op);
 
             Element stud = doc.createElement("student");
