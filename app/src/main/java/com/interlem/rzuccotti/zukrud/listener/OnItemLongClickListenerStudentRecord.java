@@ -29,6 +29,8 @@ public class OnItemLongClickListenerStudentRecord implements AdapterView.OnItemL
 
     Context context;
     String id;
+    MainActivity ma;
+    ListView listview;
 
 
     public void editRecord(final int studentId) {
@@ -68,7 +70,7 @@ public class OnItemLongClickListenerStudentRecord implements AdapterView.OnItemL
                             Toast.makeText(context, "Unable to update student record.", Toast.LENGTH_SHORT).show();
                             Log.e("Modifica studente", "Impossibile modificare lo studente: " + objectStudent.toString());
                         }
-
+                        listview.setOnItemClickListener(new OnItemClickListenerStudentRecord());
                         ((MainActivity) context).readRecords();
                     }
 
@@ -85,8 +87,8 @@ public class OnItemLongClickListenerStudentRecord implements AdapterView.OnItemL
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int index_i, long index_l) {
         context = view.getContext();
-        MainActivity ma = (MainActivity) context;
-        final ListView listview = ma.findViewById(R.id.listview);
+        ma = (MainActivity) context;
+        listview = ma.findViewById(R.id.listview);
         listview.setOnItemClickListener(null);
 
         final List<ObjectStudent> students = new TableControllerStudent(context).read();
